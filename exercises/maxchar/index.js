@@ -5,25 +5,32 @@
 // maxChar("abcccccccd") === "c"
 // maxChar("apple 1231111") === "1"
 
-
-
-function maxChar(str) {
-  if (!str.length) return;
+function getCharMap(str) {
   const charMap = {}
-  let currChar = str[0];
-  let currMax = 0
-
+  
   for (let char of str) {
     const freq = (charMap[char] ?? 0) + 1
     charMap[char] = freq
-
-    if (freq > currMax) {
-      currMax = freq
-      currChar = char
-    }
   }
 
-  return currChar
+  return charMap
+}
+
+function getHighestFrequencyFromCharMap(charMap) {
+  return Object.keys(charMap).reduce((accum, val) => {
+    if (!accum.length || !charMap[accum]) return val
+    if (charMap[accum] < charMap[val]) return val
+    return accum
+  }, '')
+}
+
+function maxChar(str) {
+  if (!str.length) return;
+
+  const charMap = getCharMap(str)
+  const highestFreq = getHighestFrequencyFromCharMap(charMap)
+
+  return highestFreq?.[0] ?? ''
 }
 
 module.exports = maxChar;
