@@ -10,12 +10,14 @@
 
 
 function sortStringChars(str) {
-  return str.split('').sort().join('')
+  return str.replace(/[^\w]/g, '')
+  .split('')
+  .sort()
+  .join('')
+  .toLowerCase()
 }
 
 function anagrams(stringA, stringB) {
-  if (stringA.length !== stringB.length) return false;
-
   return sortStringChars(stringA) === sortStringChars(stringB)
 }
 
